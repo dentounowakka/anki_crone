@@ -11,20 +11,27 @@ Anki の公式オープンソースリポジトリをローカルに取得し、
 このスクリプトは次の処理を行います。
 
 1. `anki/` が未作成の場合、公式リポジトリ `https://github.com/ankitects/anki.git` を clone します。
-2. 既に `anki/.git` がある場合、現在のブランチと作業ツリー状態を表示します。
-3. Anki 開発でよく使う `git`、`python3`、`node`、`yarn`、`bazel` の有無を確認します。
-4. 次に実行する開発コマンドの案内を表示します。
+2. 公式 URL が使えない場合、`ANKI_REPO_URLS` で指定した代替 URL も順番に試します。
+3. 既に `anki/.git` がある場合、現在のブランチと作業ツリー状態を表示します。
+4. Anki 開発でよく使う `git`、`python3`、`node`、`yarn`、`bazel` の有無を確認します。
+5. 次に実行する開発コマンドの案内を表示します。
 
-> この実行環境では GitHub への CONNECT が `403 Forbidden` でブロックされたため、実リポジトリの clone はこのコミット時点では完了していません。ネットワークで GitHub へ接続できる環境で上記スクリプトを実行してください。
+## この環境で clone が失敗した理由
 
-## 手動 clone
+このコンテナでは `HTTPS_PROXY=http://proxy:8080` が設定されており、GitHub への HTTPS CONNECT がプロキシ側で `403 Forbidden` として拒否されました。プロキシを外すと `github.com` の名前解決自体ができないため、このコンテナからは Anki 本体の clone を完了できません。
 
-スクリプトを使わない場合は、以下を実行してください。
+GitHub に接続できる通常のネットワーク環境では、以下のコマンドまたはセットアップスクリプトで clone できます。
 
 ```bash
 git clone https://github.com/ankitects/anki.git anki
-cd anki
-git status
+```
+
+## 代替 URL を指定して clone する
+
+社内ミラーやフォークを使う場合は、空白区切りで URL を指定できます。
+
+```bash
+ANKI_REPO_URLS="https://github.com/ankitects/anki.git https://example.com/mirror/anki.git" ./scripts/setup_anki.sh
 ```
 
 ## 改良作業の流れ
