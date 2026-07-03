@@ -2,6 +2,17 @@
 
 Anki の公式オープンソースリポジトリをローカルに取得し、改良作業を始めるためのワークスペースです。
 
+
+## GitHub Pages で公開する
+
+このリポジトリは GitHub Pages でそのまま表示できる `index.html` と `styles.css` を含んでいます。GitHub のリポジトリ設定で Pages の Source を `Deploy from a branch`、Branch を公開したいブランチの `/ (root)` に設定すると、セットアップ案内ページが公開されます。
+
+ローカルで表示確認する場合は、以下を実行して `http://127.0.0.1:8000/` を開いてください。
+
+```bash
+python3 -m http.server 8000
+```
+
 ## セットアップ
 
 ```bash
